@@ -1,35 +1,45 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 [ExecuteAlways]
-public class TriangleGenerator : MonoBehaviour
+public class CubicTriangle : MonoBehaviour
 {
     [SerializeField] Material Mat;
 
     void OnValidate()
     {
-        Generate3DTriangle();
+        GenerateCubicTriangle();
     }
 
-    public void Generate3DTriangle()
-    {
-        if (!gameObject.activeInHierarchy) return;
-        if (Mat == null) return;
 
-        Vector3 A = new Vector3(3, 0, 5);
-        Vector3 B = new Vector3(6, 0, 0);
-        Vector3 C = new Vector3(0, 0, 0);
+    public void GenerateCubicTriangle()
+    {
+
+        Vector3 A = new Vector3(0, 1, 1);
+        Vector3 B = new Vector3(1, 1, 1);
+        Vector3 C = new Vector3(0.5f, 1, 0);
+
+        Vector3 D = new Vector3(0, 0, 1);
+        Vector3 E = new Vector3(1, 0, 1);
+        Vector3 F = new Vector3(0.5f, 0, 0);
 
         TriangleMesh mesh = new TriangleMesh();
         mesh.Vertices.Add(A);
         mesh.Vertices.Add(B);
         mesh.Vertices.Add(C);
+        mesh.Vertices.Add(D);
+        mesh.Vertices.Add(E);
+        mesh.Vertices.Add(F);
 
         mesh.Indices.Add(0);
         mesh.Indices.Add(1);
         mesh.Indices.Add(2);
+        mesh.Indices.Add(3);
+        mesh.Indices.Add(4);
+        mesh.Indices.Add(5);
+
+
 
         var mf = GetComponent<MeshFilter>();
         var mr = GetComponent<MeshRenderer>();
@@ -45,4 +55,6 @@ public class TriangleGenerator : MonoBehaviour
 
         mr.sharedMaterial = Mat;
     }
+
+
 }
