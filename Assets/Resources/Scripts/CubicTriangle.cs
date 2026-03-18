@@ -32,14 +32,14 @@ public class CubicTriangle : MonoBehaviour
         mesh.Vertices.Add(E);
         mesh.Vertices.Add(F);
 
-        mesh.Indices.Add(0);
-        mesh.Indices.Add(1);
-        mesh.Indices.Add(2);
-        mesh.Indices.Add(3);
-        mesh.Indices.Add(4);
-        mesh.Indices.Add(5);
-
-
+        mesh.Indices.AddRange(new[] { 0, 1, 2 });
+        mesh.Indices.AddRange(new[] { 5, 4, 3 });
+        mesh.Indices.AddRange(new[] { 2, 1, 5 });
+        mesh.Indices.AddRange(new[] { 1, 4, 5 });
+        mesh.Indices.AddRange(new[] { 0, 3, 1 });
+        mesh.Indices.AddRange(new[] { 1, 3, 4 });
+        mesh.Indices.AddRange(new[] { 0, 2, 5 });
+        mesh.Indices.AddRange(new[] { 0, 5, 3 });
 
         var mf = GetComponent<MeshFilter>();
         var mr = GetComponent<MeshRenderer>();
@@ -52,6 +52,7 @@ public class CubicTriangle : MonoBehaviour
 
         mf.sharedMesh.SetVertices(mesh.Vertices);
         mf.sharedMesh.SetIndices(mesh.Indices, MeshTopology.Triangles, 0);
+        mf.mesh.RecalculateNormals();
 
         mr.sharedMaterial = Mat;
     }
