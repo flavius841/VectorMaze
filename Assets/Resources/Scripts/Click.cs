@@ -6,18 +6,26 @@ public class Click : MonoBehaviour
 
     float minY = -2.4f;
     float maxY = -2f;
+    public bool releasedOnButton = false;
 
     bool isHolding = false;
 
     void OnMouseDown()
     {
         isHolding = true;
+        releasedOnButton = false;
+    }
+
+    void OnMouseUpAsButton()
+    {
+        releasedOnButton = true;
     }
 
     void OnMouseUp()
     {
         isHolding = false;
     }
+
 
     void Update()
     {
