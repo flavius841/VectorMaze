@@ -4,6 +4,7 @@ public class OpeningMaze : MonoBehaviour
 {
     [SerializeField] float Timer;
     [SerializeField] int i = 0;
+    [SerializeField] int j = 0;
     void Start()
     {
 
@@ -17,7 +18,6 @@ public class OpeningMaze : MonoBehaviour
             if (Timer > 0)
             {
                 Timer -= Time.deltaTime;
-                transform.GetChild(i).Translate(Vector3.right * Time.deltaTime * 80f);
             }
             else
             {
@@ -25,6 +25,11 @@ public class OpeningMaze : MonoBehaviour
                 i++;
             }
 
+        }
+
+        for (j = 0; j < i; j++)
+        {
+            transform.GetChild(j).Translate(Vector3.right * Time.deltaTime * 80f);
         }
 
     }
