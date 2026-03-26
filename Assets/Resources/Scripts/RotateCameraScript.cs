@@ -5,6 +5,7 @@ public class RotateCameraScript : MonoBehaviour
     [SerializeField] Transform target;
     [SerializeField] float distance;
     [SerializeField] float sensitivity;
+    [SerializeField] bool NoScrolling;
 
     float x;
     float y;
@@ -27,7 +28,7 @@ public class RotateCameraScript : MonoBehaviour
             y = Mathf.Clamp(y, -80f, 80f);
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        if (Input.GetAxis("Mouse ScrollWheel") != 0 && !NoScrolling)
         {
             scroll = Input.GetAxis("Mouse ScrollWheel");
             distance -= scroll * sensitivity * 5f;

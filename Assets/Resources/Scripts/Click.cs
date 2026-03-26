@@ -6,6 +6,7 @@ public class Click : MonoBehaviour
     [SerializeField] bool StartButtons;
     [SerializeField] float ColorBrightness;
     [SerializeField] float MinBrightness;
+    public OpeningMaze openingMaze;
 
 
     float MaxBrightness = 255f;
@@ -17,23 +18,37 @@ public class Click : MonoBehaviour
 
     void OnMouseDown()
     {
-        isHolding = true;
-        releasedOnButton = false;
+        if (openingMaze.Done)
+        {
+            isHolding = true;
+            releasedOnButton = false;
+        }
     }
 
     void OnMouseUpAsButton()
     {
-        releasedOnButton = true;
+        if (openingMaze.Done)
+        {
+            releasedOnButton = true;
+        }
     }
 
     void OnMouseUp()
     {
-        isHolding = false;
+        if (openingMaze.Done)
+        {
+            isHolding = false;
+        }
     }
 
 
     void Update()
     {
+        if (!openingMaze.Done)
+        {
+            return;
+        }
+
         if (StartButtons)
         {
 
