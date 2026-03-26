@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class OpenLevels : MonoBehaviour
 {
-    public Click click;
+    public Click StartButton;
+    public Click BackButton;
     bool stop = false;
     void Start()
     {
@@ -11,14 +12,44 @@ public class OpenLevels : MonoBehaviour
 
     void Update()
     {
-        if (click.releasedOnButton && !stop)
+        if (StartButton.releasedOnButton)
         {
-            transform.Translate(Vector3.down * Time.deltaTime * 20f);
+            if (transform.localPosition.y < 7.6f)
+            {
+                stop = true;
+            }
+
+            else
+            {
+                stop = false;
+            }
+
+            if (!stop)
+            {
+                BackButton.releasedOnButton = false;
+                transform.Translate(Vector3.down * Time.deltaTime * 20f);
+            }
         }
 
-        if (transform.localPosition.y < 7.6f)
+
+
+        if (BackButton.releasedOnButton)
         {
-            stop = true;
+            if (transform.localPosition.y > 53f)
+            {
+                stop = true;
+            }
+
+            else
+            {
+                stop = false;
+            }
+
+            if (!stop)
+            {
+                StartButton.releasedOnButton = false;
+                transform.Translate(Vector3.up * Time.deltaTime * 20f);
+            }
         }
 
 
