@@ -5,6 +5,7 @@ public class OpeningMaze : MonoBehaviour
     [SerializeField] float Timer;
     [SerializeField] int i = 0;
     [SerializeField] int j = 0;
+    public bool Done = false;
     void Start()
     {
 
@@ -23,6 +24,11 @@ public class OpeningMaze : MonoBehaviour
             {
                 Timer = 0.5f;
                 i++;
+
+                if (i == transform.childCount)
+                {
+                    Done = true;
+                }
             }
 
         }
