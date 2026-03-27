@@ -6,19 +6,23 @@ using System.Collections.Generic;
 
 public class Tutorial : MonoBehaviour
 {
+    public bool TutorialDone = false;
     [SerializeField] TextMeshProUGUI textDisplay;
-    [SerializeField] string Part1 = "Welcome!";
-    [SerializeField] string Part2 = "In this tutorial, you will learn how to solve a Vector Maze.";
-    [SerializeField] string Part3 = "Don't worry, it's not as hard as it sounds!";
-    [SerializeField] string Part4 = "The main goal of the game is to get rid of all the vectors in the maze.";
-    [SerializeField] string Part5 = "Just click on them";
-    [SerializeField] string Part6 = "But...";
-    [SerializeField] string Part7 = "Be careful!   The vectors will go in the direction they are pointing in";
-    [SerializeField] string Part8 = "And if they hit another vector,        well,    you don't know what a physics reaction can do!";
+    [SerializeField] TextMeshProUGUI NextButtonText;
+    private string Part1 = "Welcome!";
+    private string Part2 = "In this tutorial, you will learn how to solve a Vector Maze.";
+    private string Part3 = "Don't worry, it's not as hard as it sounds!";
+    private string Part4 = "The main goal of the game is to get rid of all the vectors in the maze.";
+    private string Part5 = "Just click on them";
+    private string Part6 = "But...";
+    private string Part7 = "Be careful!   The vectors will go in the direction they are pointing in";
+    private string Part8 = "And if they hit another vector,        well,   you don't know what a physics reaction can do!";
     private float typingSpeed = 0.05f;
+    private bool isTyping = false;
+
+    [SerializeField] int currentIndex = 0;
 
     private List<string> dialogSteps = new List<string>();
-    private int currentIndex = 0;
 
     void Awake()
     {
@@ -32,6 +36,11 @@ public class Tutorial : MonoBehaviour
         dialogSteps.Add(Part8);
     }
 
+    void Start()
+    {
+        StartCoroutine(TypeText(dialogSteps[currentIndex]));
+    }
+
     IEnumerator TypeText(string fullText)
     {
         textDisplay.text = "";
@@ -40,34 +49,42 @@ public class Tutorial : MonoBehaviour
         {
             textDisplay.text += letter;
             yield return new WaitForSeconds(typingSpeed);
+            isTyping = true;
         }
-    }
 
-    string GetPartText(int partNumber)
-    {
-        switch (partNumber)
-        {
-            case 0: return Part1;
-            case 1: return Part2;
-            case 2: return Part3;
-            case 3: return Part4;
-            case 4: return Part5;
-            case 5: return Part6;
-            case 6: return Part7;
-            case 7: return Part8;
-            default: return "";
-        }
+        isTyping = false;
     }
-
 
     void Update()
     {
-        for (int i = 0; i < 8; i++)
+        if (isTyping)
         {
-            StartCoroutine(TypeText(GetPartText(i)));
+            NextButtonText.color = new Color32(0, 0, 0, 0);
+        }
+
+        else
+        {
+            NextButtonText.color = new Color32(0, 0, 0, 255);
         }
 
     }
+
+    public void NextButton()
+    {
+        if (currentIndex < dialogSteps.Count - 1 && !isTyping)
+        {
+            currentIndex++;
+            StartCoroutine(TypeText(dialogSteps[currentIndex]));
+        }
+
+        if (currentIndex == dialogSteps.Count - 1)
+        {
+            NextButtonText.text = "Get Started";
+            TutorialDone = true;
+        }
+    }
+
+
 }
 
 
