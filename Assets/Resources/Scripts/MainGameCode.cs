@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MainGameScript : MonoBehaviour
+public class MainGameCode : MonoBehaviour
 {
     public Tutorial tutorial;
     private bool isHolding = false;

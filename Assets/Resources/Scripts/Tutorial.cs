@@ -9,6 +9,7 @@ public class Tutorial : MonoBehaviour
     public bool TutorialDone = false;
     [SerializeField] TextMeshProUGUI textDisplay;
     [SerializeField] TextMeshProUGUI NextButtonText;
+    [SerializeField] GameObject CanavasTutorial;
     private string Part1 = "Welcome!";
     private string Part2 = "In this tutorial, you will learn how to solve a Vector Maze.";
     private string Part3 = "Don't worry, it's not as hard as it sounds!";
@@ -67,6 +68,11 @@ public class Tutorial : MonoBehaviour
             NextButtonText.color = new Color32(0, 0, 0, 255);
         }
 
+        if (currentIndex == dialogSteps.Count - 1)
+        {
+            NextButtonText.text = "Get Started";
+        }
+
     }
 
     public void NextButton()
@@ -77,10 +83,10 @@ public class Tutorial : MonoBehaviour
             StartCoroutine(TypeText(dialogSteps[currentIndex]));
         }
 
-        if (currentIndex == dialogSteps.Count - 1)
+        else if (currentIndex == dialogSteps.Count - 1 && !isTyping)
         {
-            NextButtonText.text = "Get Started";
             TutorialDone = true;
+            CanavasTutorial.SetActive(false);
         }
     }
 
