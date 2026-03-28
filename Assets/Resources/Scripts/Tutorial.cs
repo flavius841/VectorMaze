@@ -9,7 +9,7 @@ public class Tutorial : MonoBehaviour
     public bool TutorialDone = false;
     [SerializeField] TextMeshProUGUI textDisplay;
     [SerializeField] TextMeshProUGUI NextButtonText;
-    [SerializeField] GameObject CanavasTutorial;
+    [SerializeField] GameObject TutorialPanel;
     private string Part1 = "Welcome!";
     private string Part2 = "In this tutorial, you will learn how to solve a Vector Maze.";
     private string Part3 = "Don't worry, it's not as hard as it sounds!";
@@ -86,7 +86,7 @@ public class Tutorial : MonoBehaviour
         else if (currentIndex == dialogSteps.Count - 1 && !isTyping)
         {
             TutorialDone = true;
-            CanavasTutorial.SetActive(false);
+            TutorialPanel.SetActive(false);
         }
     }
 
