@@ -54,6 +54,7 @@ public class MainGameCode : MonoBehaviour
 
         if (Collided)
         {
+            LoseText.gameObject.SetActive(true);
             ColorAlpha = Mathf.Lerp(ColorAlpha, MaxAlpha, Time.deltaTime * 10f);
 
             byte b = (byte)ColorAlpha;
