@@ -48,9 +48,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorial: {fileID: 0}
+  scoreScript: {fileID: 0}
   releasedOnButton: 0
   Collided: 0
   LoseText: {fileID: 0}
+  RestartButton: {fileID: 0}
+  BackButton: {fileID: 0}
   ColorAlpha: 0
   MaxAlpha: 255
 --- !u!54 &5790173499945551508

@@ -4,16 +4,19 @@ using TMPro;
 public class MainGameCode : MonoBehaviour
 {
     public Tutorial tutorial;
+    public ScoreScript scoreScript;
     private bool isHolding = false;
     [SerializeField] bool releasedOnButton = false;
     [SerializeField] bool Collided;
     [SerializeField] TextMeshProUGUI LoseText;
+    [SerializeField] GameObject RestartButton;
+    [SerializeField] GameObject BackButton;
     [SerializeField] float ColorAlpha = 0f;
     [SerializeField] float MaxAlpha = 255f;
 
     void OnMouseDown()
     {
-        if (tutorial.TutorialDone)
+        if (tutorial.TutorialDone && !Collided)
         {
             isHolding = true;
             releasedOnButton = false;
@@ -22,15 +25,16 @@ public class MainGameCode : MonoBehaviour
 
     void OnMouseUpAsButton()
     {
-        if (tutorial.TutorialDone)
+        if (tutorial.TutorialDone && !Collided)
         {
             releasedOnButton = true;
+            scoreScript.Score++;
         }
     }
 
     void OnMouseUp()
     {
-        if (tutorial.TutorialDone)
+        if (tutorial.TutorialDone && !Collided)
         {
             isHolding = false;
         }
@@ -55,6 +59,12 @@ public class MainGameCode : MonoBehaviour
             byte b = (byte)ColorAlpha;
 
             LoseText.color = new Color32(79, 3, 0, b);
+
+            if (ColorAlpha > 250f)
+            {
+                RestartButton.SetActive(true);
+                BackButton.SetActive(true);
+            }
         }
     }
     void OnCollisionEnter(Collision collision)

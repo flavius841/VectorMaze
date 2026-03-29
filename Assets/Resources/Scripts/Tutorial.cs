@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 
 public class Tutorial : MonoBehaviour
@@ -90,6 +91,25 @@ public class Tutorial : MonoBehaviour
         }
     }
 
+    public void BackButton()
+    {
+        Invoke("BackToMenu", 1f);
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void RestartButton()
+    {
+        Invoke("RestartScene", 1f);
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
 }
 
