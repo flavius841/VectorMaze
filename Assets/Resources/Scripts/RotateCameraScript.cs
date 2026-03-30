@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class RotateCameraScript : MonoBehaviour
 {
+    public OpeningMaze openingMaze;
     [SerializeField] Transform target;
     [SerializeField] float distance;
     [SerializeField] float sensitivity;
     [SerializeField] bool NoScrolling;
+    [SerializeField] bool NoRotating;
+    [SerializeField] bool Menu;
 
     float x;
     float y;
     float scroll;
-
     void Start()
     {
         Vector3 angles = transform.eulerAngles;
@@ -18,9 +20,25 @@ public class RotateCameraScript : MonoBehaviour
         y = angles.x;
     }
 
+
     void LateUpdate()
     {
-        if (Input.GetMouseButton(1))
+        if (Menu)
+        {
+            if (openingMaze.Done)
+            {
+                NoRotating = false;
+            }
+
+            else
+            {
+                NoRotating = true;
+            }
+        }
+
+
+
+        if (Input.GetMouseButton(1) && !NoRotating)
         {
             x += Input.GetAxis("Mouse X") * sensitivity;
             y -= Input.GetAxis("Mouse Y") * sensitivity;
