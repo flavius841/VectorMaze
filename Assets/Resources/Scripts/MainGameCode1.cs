@@ -41,6 +41,7 @@ public class MainGameCode : MonoBehaviour
             if (!collisionScript.Collided)
             {
                 releasedOnButton = true;
+                scoreScript.Score++;
             }
         }
 

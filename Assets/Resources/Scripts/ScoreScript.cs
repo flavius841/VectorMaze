@@ -1,12 +1,14 @@
 using UnityEngine;
+using TMPro;
 
 public class ScoreScript : MonoBehaviour
 {
     public int Score;
     public bool StartFinalTutorial;
     public TapAwayMatrixGenerator tapAwayMatrixGenerator;
+    public CollisionScript collisionScript;
     [SerializeField] bool Cheked;
-    [SerializeField] GameObject LoseText;
+    [SerializeField] GameObject LoseWinText;
     [SerializeField] GameObject TutorialPanel;
     [SerializeField] bool NormalLevel;
 
@@ -14,9 +16,9 @@ public class ScoreScript : MonoBehaviour
     {
         if (NormalLevel)
         {
-            if (Score == tapAwayMatrixGenerator.width * tapAwayMatrixGenerator.height - 1 && !Cheked)
+            if (Score == tapAwayMatrixGenerator.width * tapAwayMatrixGenerator.height && !Cheked)
             {
-                Invoke("FinalTutorial", 1f);
+                Invoke("WinFunction", 1f);
                 Cheked = true;
             }
         }
@@ -30,11 +32,21 @@ public class ScoreScript : MonoBehaviour
 
     void FinalTutorial()
     {
-        if (!LoseText.activeInHierarchy)
+        if (!LoseWinText.activeInHierarchy)
         {
             StartFinalTutorial = true;
             TutorialPanel.SetActive(true);
         }
+    }
+
+    void WinFunction()
+    {
+        if (!LoseWinText.activeInHierarchy)
+        {
+            LoseWinText.GetComponent<TextMeshProUGUI>().text = "    You Win!";
+            collisionScript.Collided = true;
+        }
+
     }
 
 }
