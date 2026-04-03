@@ -104,8 +104,6 @@ public class Tutorial : MonoBehaviour
             StartCoroutine(TypeText(dialogSteps2[currentIndex2]));
             firstpartDone = true;
         }
-
-
     }
 
     public void NextButton()
