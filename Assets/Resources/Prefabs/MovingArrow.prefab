@@ -31,8 +31,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 49665501935059494}
   - {fileID: 7224388475502335614}
+  - {fileID: 49665501935059494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &8664089777612145604
@@ -47,10 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e5f7f86ea5f130fa78fdb000770296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionScript: {fileID: 0}
   tutorial: {fileID: 0}
   scoreScript: {fileID: 0}
   releasedOnButton: 0
-  Collided: 0
+  NormalLevel: 0
   LoseText: {fileID: 0}
   RestartButton: {fileID: 0}
   BackButton: {fileID: 0}

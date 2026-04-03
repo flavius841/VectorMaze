@@ -3,11 +3,12 @@ using TMPro;
 
 public class MainGameCode : MonoBehaviour
 {
+    public CollisionScript collisionScript;
     public Tutorial tutorial;
     public ScoreScript scoreScript;
     private bool isHolding = false;
     [SerializeField] bool releasedOnButton = false;
-    [SerializeField] bool Collided;
+    [SerializeField] bool NormalLevel;
     [SerializeField] TextMeshProUGUI LoseText;
     [SerializeField] GameObject RestartButton;
     [SerializeField] GameObject BackButton;
@@ -16,7 +17,17 @@ public class MainGameCode : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (tutorial.TutorialDone && !Collided)
+        if (NormalLevel)
+        {
+            if (!collisionScript.Collided)
+            {
+                isHolding = true;
+                releasedOnButton = false;
+            }
+
+        }
+
+        else if (tutorial != null && tutorial.TutorialDone && !collisionScript.Collided)
         {
             isHolding = true;
             releasedOnButton = false;
@@ -25,7 +36,15 @@ public class MainGameCode : MonoBehaviour
 
     void OnMouseUpAsButton()
     {
-        if (tutorial.TutorialDone && !Collided)
+        if (NormalLevel)
+        {
+            if (!collisionScript.Collided)
+            {
+                releasedOnButton = true;
+            }
+        }
+
+        else if (tutorial != null && tutorial.TutorialDone && !collisionScript.Collided)
         {
             releasedOnButton = true;
             scoreScript.Score++;
@@ -34,7 +53,15 @@ public class MainGameCode : MonoBehaviour
 
     void OnMouseUp()
     {
-        if (tutorial.TutorialDone && !Collided)
+        if (NormalLevel)
+        {
+            if (!collisionScript.Collided)
+            {
+                isHolding = false;
+            }
+        }
+
+        else if (tutorial != null && tutorial.TutorialDone && !collisionScript.Collided)
         {
             isHolding = false;
         }
@@ -52,7 +79,7 @@ public class MainGameCode : MonoBehaviour
             transform.Translate(Vector3.right * Time.deltaTime * 80f);
         }
 
-        if (Collided)
+        if (collisionScript.Collided)
         {
             LoseText.gameObject.SetActive(true);
             ColorAlpha = Mathf.Lerp(ColorAlpha, MaxAlpha, Time.deltaTime * 10f);
@@ -72,7 +99,7 @@ public class MainGameCode : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Vector"))
         {
-            Collided = true;
+            collisionScript.Collided = true;
         }
     }
 }
