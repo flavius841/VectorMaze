@@ -8,7 +8,6 @@ public class TapAwayMatrixGenerator : MonoBehaviour
     public GameObject arrowPrefab;
     public float spacing = 2.0f;
 
-
     void Start()
     {
         int[,] resultMatrix = GenerateMatrix(width, height);
@@ -20,18 +19,22 @@ public class TapAwayMatrixGenerator : MonoBehaviour
 
     void SpawnVisuals(int[,] matrix)
     {
-        for (int x = width - 1; x >= 0; x--)
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = height - 1; y >= 0; y--)
             {
                 int direction = matrix[y, x];
 
-                Vector3 pos = new Vector3(x * spacing, 0, y * spacing);
+                Vector3 localPos = new Vector3(x * spacing, 0, -y * spacing);
 
-                Quaternion rot = Quaternion.Euler(0, direction * 90f, 0);
+                Quaternion localRot = Quaternion.Euler(0, direction * 90f, 0);
 
-                GameObject arrow = Instantiate(arrowPrefab, pos, rot, transform);
-                arrow.name = $"Arrow [{x},{y}]";
+                GameObject arrow = Instantiate(arrowPrefab, transform);
+
+                arrow.transform.localPosition = localPos;
+                arrow.transform.localRotation = localRot;
+
+                arrow.name = $"Arrow [{y},{x}]";
             }
         }
     }
