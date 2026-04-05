@@ -3,6 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
+    [SerializeField] bool StartMoving;
+    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float MaxX;
+    [SerializeField] Transform SizePanel;
+
     void Start()
     {
 
@@ -11,6 +16,15 @@ public class ButtonManager : MonoBehaviour
 
     void Update()
     {
+        if (StartMoving)
+        {
+            SizePanel.localPosition += Vector3.right * moveSpeed * Time.deltaTime;
+
+            if (SizePanel.localPosition.x > MaxX)
+            {
+                StartMoving = false;
+            }
+        }
 
     }
 
@@ -23,4 +37,11 @@ public class ButtonManager : MonoBehaviour
     {
         Invoke("LoadTutorial", 0.5f);
     }
+
+    public void AskSize()
+    {
+        StartMoving = true;
+    }
+
+
 }

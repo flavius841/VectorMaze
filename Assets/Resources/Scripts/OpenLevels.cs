@@ -14,7 +14,7 @@ public class OpenLevels : MonoBehaviour
     {
         if (StartButton.releasedOnButton)
         {
-            if (transform.localPosition.y < 7.6f)
+            if (transform.localPosition.y < 2.5f)
             {
                 stop = true;
             }
