@@ -38,51 +38,58 @@ public class TapAwayMatrixGenerator : MonoBehaviour
             }
         }
     }
-
     public int[,] GenerateMatrix(int w, int h)
     {
-        int[,] matrix = new int[w, h];
-        int totalCells = w * h;
-        int placedCount = 0;
-
-        for (int x = 0; x < w; x++)
+        while (true)
         {
-            for (int y = 0; y < h; y++)
-            {
-                matrix[x, y] = -1;
-            }
-        }
-
-        while (placedCount < totalCells)
-        {
-            List<Candidate> validMoves = new List<Candidate>();
+            int[,] matrix = new int[w, h];
+            int totalCells = w * h;
+            int placedCount = 0;
+            bool gotStuck = false;
 
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
                 {
-                    if (matrix[x, y] == -1)
-                    {
-                        if (IsPathEmpty(matrix, w, h, x, y, 0)) validMoves.Add(new Candidate(x, y, 0)); // Up
-                        if (IsPathEmpty(matrix, w, h, x, y, 1)) validMoves.Add(new Candidate(x, y, 1)); // Right
-                        if (IsPathEmpty(matrix, w, h, x, y, 2)) validMoves.Add(new Candidate(x, y, 2)); // Down
-                        if (IsPathEmpty(matrix, w, h, x, y, 3)) validMoves.Add(new Candidate(x, y, 3)); // Left
-                    }
+                    matrix[x, y] = -1;
                 }
             }
 
-            if (validMoves.Count == 0)
+            while (placedCount < totalCells)
             {
-                return GenerateMatrix(w, h);
+                List<Candidate> validMoves = new List<Candidate>();
+
+                for (int x = 0; x < w; x++)
+                {
+                    for (int y = 0; y < h; y++)
+                    {
+                        if (matrix[x, y] == -1)
+                        {
+                            if (IsPathEmpty(matrix, w, h, x, y, 0)) validMoves.Add(new Candidate(x, y, 0)); // Up
+                            if (IsPathEmpty(matrix, w, h, x, y, 1)) validMoves.Add(new Candidate(x, y, 1)); // Right
+                            if (IsPathEmpty(matrix, w, h, x, y, 2)) validMoves.Add(new Candidate(x, y, 2)); // Down
+                            if (IsPathEmpty(matrix, w, h, x, y, 3)) validMoves.Add(new Candidate(x, y, 3)); // Left
+                        }
+                    }
+                }
+
+                if (validMoves.Count == 0)
+                {
+                    gotStuck = true;
+                    break;
+                }
+
+                Candidate pick = validMoves[UnityEngine.Random.Range(0, validMoves.Count)];
+
+                matrix[pick.x, pick.y] = pick.dir;
+                placedCount++;
             }
 
-            Candidate pick = validMoves[Random.Range(0, validMoves.Count)];
-
-            matrix[pick.x, pick.y] = pick.dir;
-            placedCount++;
+            if (!gotStuck)
+            {
+                return matrix;
+            }
         }
-
-        return matrix;
     }
 
     private bool IsPathEmpty(int[,] matrix, int w, int h, int startX, int startY, int dir)
