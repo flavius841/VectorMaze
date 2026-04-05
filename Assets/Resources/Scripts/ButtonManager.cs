@@ -4,8 +4,10 @@ using UnityEngine.SceneManagement;
 public class ButtonManager : MonoBehaviour
 {
     [SerializeField] bool StartMoving;
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] bool Goback;
+    [SerializeField] float moveSpeed;
     [SerializeField] float MaxX;
+    [SerializeField] float finalX;
     [SerializeField] Transform SizePanel;
 
     void Start()
@@ -22,10 +24,23 @@ public class ButtonManager : MonoBehaviour
 
             if (SizePanel.localPosition.x > MaxX)
             {
+                Goback = true;
                 StartMoving = false;
             }
         }
 
+        if (Goback)
+        {
+            moveSpeed = 40f;
+
+            SizePanel.localPosition += Vector3.left * moveSpeed * Time.deltaTime;
+
+            if (SizePanel.localPosition.x < finalX)
+            {
+                Goback = false;
+            }
+
+        }
     }
 
     public void LoadTutorial()
