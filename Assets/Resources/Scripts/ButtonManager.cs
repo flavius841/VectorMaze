@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
+    public UserInputScript userInput;
     [SerializeField] bool StartMoving;
     [SerializeField] bool Goback;
     [SerializeField] float moveSpeed;
@@ -56,6 +57,25 @@ public class ButtonManager : MonoBehaviour
     public void AskSize()
     {
         StartMoving = true;
+    }
+
+    public void LoadRLevel()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void RLevelButton()
+    {
+        if (userInput.TookInput)
+        {
+            Invoke("LoadRLevel", 0.5f);
+        }
+
+        else
+        {
+            StartCoroutine(userInput.FlashPlaceholderError());
+        }
+
     }
 
 

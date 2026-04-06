@@ -3,11 +3,17 @@ using UnityEngine;
 
 public class TapAwayMatrixGenerator : MonoBehaviour
 {
-    public int width = 5;
-    public int height = 5;
+    public GameDataScript gameData;
+    public int width;
+    public int height;
     public GameObject arrowPrefab;
     public float spacing = 2.0f;
 
+    void Awake()
+    {
+        width = gameData.MazeSize2D;
+        height = gameData.MazeSize2D;
+    }
     void Start()
     {
         int[,] resultMatrix = GenerateMatrix(width, height);

@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/Menu.unity
     guid: 028902ab5f1ae6b5bbb380af74743518
+  - enabled: 1
+    path: Assets/Resources/Scenes/RandomLevel.unity
+    guid: bd86a38a7e572f100ba7d040a94a5873
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
