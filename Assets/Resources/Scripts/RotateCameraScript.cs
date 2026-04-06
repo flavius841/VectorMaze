@@ -3,13 +3,17 @@ using UnityEngine;
 public class RotateCameraScript : MonoBehaviour
 {
     public OpeningMaze openingMaze;
+    public GameDataScript gameData;
     [SerializeField] Transform target;
+    [SerializeField] bool GotTheCenter;
     [SerializeField] float distance;
     [SerializeField] float sensitivity;
     [SerializeField] bool NoScrolling;
     [SerializeField] bool NoRotating;
     [SerializeField] bool Menu;
+    [SerializeField] bool Tutorial;
     [SerializeField] Vector3 center;
+    [SerializeField] float MaxDistance;
 
     float x;
     float y;
@@ -20,16 +24,13 @@ public class RotateCameraScript : MonoBehaviour
         x = angles.y;
         y = angles.x;
 
-        center = GetCombinedCenter(target.gameObject);
-
-
+        MaxDistance = CameraDistance();
+        distance = MaxDistance;
     }
 
 
     void LateUpdate()
     {
-        center = GetCombinedCenter(target.gameObject);
-
         if (Menu)
         {
             if (openingMaze.Done)
@@ -41,6 +42,12 @@ public class RotateCameraScript : MonoBehaviour
             {
                 NoRotating = true;
             }
+        }
+
+        else if (!GotTheCenter)
+        {
+            center = GetCombinedCenter(target.gameObject);
+            GotTheCenter = true;
         }
 
         if (Input.GetMouseButton(1) && !NoRotating)
@@ -55,14 +62,26 @@ public class RotateCameraScript : MonoBehaviour
         {
             scroll = Input.GetAxis("Mouse ScrollWheel");
             distance -= scroll * sensitivity * 5f;
-            distance = Mathf.Clamp(distance, 2f, 15f);
+            distance = Mathf.Clamp(distance, 2f, MaxDistance);
         }
 
         Quaternion rotation = Quaternion.Euler(y, x, 0);
-        Vector3 position = center - (rotation * Vector3.forward * distance);
 
-        transform.rotation = rotation;
-        transform.position = position;
+        if (Menu)
+        {
+            Vector3 position = target.position - (rotation * Vector3.forward * distance);
+
+            transform.rotation = rotation;
+            transform.position = position;
+        }
+
+        else
+        {
+            Vector3 position = center - (rotation * Vector3.forward * distance);
+
+            transform.rotation = rotation;
+            transform.position = position;
+        }
 
 
     }
@@ -71,16 +90,23 @@ public class RotateCameraScript : MonoBehaviour
         Renderer[] renderers = parent.GetComponentsInChildren<Renderer>();
         if (renderers.Length == 0) return parent.transform.position;
 
-        // Create a box starting at the first renderer
         Bounds bounds = renderers[0].bounds;
 
-        // Expand the box to include all other children
         for (int i = 1; i < renderers.Length; i++)
         {
             bounds.Encapsulate(renderers[i].bounds);
         }
 
-        // This is the "Center" coordinate you see in the Scene View
         return bounds.center;
+    }
+
+    float CameraDistance()
+    {
+        if (Menu || Tutorial) return 15f;
+        else if (gameData.MazeSize2D == 6) return 25f;
+        else if (gameData.MazeSize2D == 5) return 20f;
+        else if (gameData.MazeSize2D == 4) return 17f;
+        else if (gameData.MazeSize2D == 3) return 14f;
+        else return 9f;
     }
 }
