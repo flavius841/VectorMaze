@@ -9,6 +9,7 @@ public class RotateCameraScript : MonoBehaviour
     [SerializeField] bool NoScrolling;
     [SerializeField] bool NoRotating;
     [SerializeField] bool Menu;
+    [SerializeField] Vector3 center;
 
     float x;
     float y;
@@ -18,11 +19,17 @@ public class RotateCameraScript : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
+
+        center = GetCombinedCenter(target.gameObject);
+
+
     }
 
 
     void LateUpdate()
     {
+        center = GetCombinedCenter(target.gameObject);
+
         if (Menu)
         {
             if (openingMaze.Done)
@@ -35,8 +42,6 @@ public class RotateCameraScript : MonoBehaviour
                 NoRotating = true;
             }
         }
-
-
 
         if (Input.GetMouseButton(1) && !NoRotating)
         {
@@ -54,9 +59,28 @@ public class RotateCameraScript : MonoBehaviour
         }
 
         Quaternion rotation = Quaternion.Euler(y, x, 0);
-        Vector3 position = target.position - (rotation * Vector3.forward * distance);
+        Vector3 position = center - (rotation * Vector3.forward * distance);
 
         transform.rotation = rotation;
         transform.position = position;
+
+
+    }
+    public Vector3 GetCombinedCenter(GameObject parent)
+    {
+        Renderer[] renderers = parent.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return parent.transform.position;
+
+        // Create a box starting at the first renderer
+        Bounds bounds = renderers[0].bounds;
+
+        // Expand the box to include all other children
+        for (int i = 1; i < renderers.Length; i++)
+        {
+            bounds.Encapsulate(renderers[i].bounds);
+        }
+
+        // This is the "Center" coordinate you see in the Scene View
+        return bounds.center;
     }
 }
