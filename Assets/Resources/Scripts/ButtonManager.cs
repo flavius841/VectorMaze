@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class ButtonManager : MonoBehaviour
 {
     public UserInputScript userInput;
-    [SerializeField] bool StartMoving;
+    [SerializeField] bool StartMovingRight;
+    [SerializeField] bool StartMovingBack;
     [SerializeField] bool Goback;
     [SerializeField] float moveSpeed;
-    [SerializeField] float MaxX;
-    [SerializeField] float finalX;
+    [SerializeField] float MaxXRight;
+    [SerializeField] float finalXRight;
+    [SerializeField] float MaxXLeft;
     [SerializeField] Transform SizePanel;
 
     void Start()
@@ -19,29 +22,32 @@ public class ButtonManager : MonoBehaviour
 
     void Update()
     {
-        if (StartMoving)
-        {
-            SizePanel.localPosition += Vector3.right * moveSpeed * Time.deltaTime;
+        // if (StartMovingRight)
+        // {
+        //     SizePanel.localPosition += Vector3.right * moveSpeed * Time.deltaTime;
 
-            if (SizePanel.localPosition.x > MaxX)
-            {
-                Goback = true;
-                StartMoving = false;
-            }
-        }
+        //     if (SizePanel.localPosition.x > MaxX)
+        //     {
+        //         Goback = true;
+        //         StartMovingRight = false;
+        //     }
+        // }
 
-        if (Goback)
-        {
-            moveSpeed = 40f;
+        // if (Goback)
+        // {
+        //     moveSpeed = 40f;
 
-            SizePanel.localPosition += Vector3.left * moveSpeed * Time.deltaTime;
+        //     SizePanel.localPosition += Vector3.left * moveSpeed * Time.deltaTime;
 
-            if (SizePanel.localPosition.x < finalX)
-            {
-                Goback = false;
-            }
+        //     if (SizePanel.localPosition.x < finalX)
+        //     {
+        //         Goback = false;
+        //     }
 
-        }
+        // }
+
+        Moving(ref StartMovingRight, true, MaxXRight, finalXRight, Vector3.right, () => SizePanel.localPosition.x > MaxXRight);
+        Moving(ref StartMovingBack, false, MaxXLeft, 0f /* doesn't matter */, Vector3.left, () => SizePanel.localPosition.x < MaxXLeft);
     }
 
     public void LoadTutorial()
@@ -56,7 +62,12 @@ public class ButtonManager : MonoBehaviour
 
     public void AskSize()
     {
-        StartMoving = true;
+        StartMovingRight = true;
+    }
+
+    public void Back()
+    {
+        StartMovingBack = true;
     }
 
     public void LoadRLevel()
@@ -76,6 +87,38 @@ public class ButtonManager : MonoBehaviour
             StartCoroutine(userInput.FlashPlaceholderError());
         }
 
+    }
+
+    void Moving(ref bool StartMoving, bool Step2nd, float MaxX, float finalX, Vector3 Direction, Func<bool> touchedMax)
+    {
+        if (StartMoving)
+        {
+            SizePanel.localPosition += Direction * moveSpeed * Time.deltaTime;
+
+            if (touchedMax())
+            {
+                if (Step2nd)
+                {
+                    Goback = true;
+                    Step2nd = false;
+                }
+
+                StartMoving = false;
+            }
+        }
+
+        if (Goback)
+        {
+            moveSpeed = 40f;
+
+            SizePanel.localPosition += Vector3.left * moveSpeed * Time.deltaTime;
+
+            if (SizePanel.localPosition.x < finalX)
+            {
+                Goback = false;
+            }
+
+        }
     }
 
 
