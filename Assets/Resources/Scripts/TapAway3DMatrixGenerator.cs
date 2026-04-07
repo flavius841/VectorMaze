@@ -10,7 +10,7 @@ public class TapAway3DMatrixGenerator : MonoBehaviour
     public int[,] layer3;
 
 
-    void Start()
+    void Awake()
     {
         layer0 = new int[size, size];
         layer1 = new int[size, size];

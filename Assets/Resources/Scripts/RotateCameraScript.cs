@@ -5,6 +5,7 @@ public class RotateCameraScript : MonoBehaviour
     public OpeningMaze openingMaze;
     public GameDataScript gameData;
     [SerializeField] Transform target;
+    [SerializeField] Transform AdditionalTarget;
     [SerializeField] bool GotTheCenter;
     [SerializeField] float distance;
     [SerializeField] float sensitivity;
@@ -12,6 +13,7 @@ public class RotateCameraScript : MonoBehaviour
     [SerializeField] bool NoRotating;
     [SerializeField] bool Menu;
     [SerializeField] bool Tutorial;
+    [SerializeField] bool is3dMaze;
     [SerializeField] Vector3 center;
     [SerializeField] float MaxDistance;
 
@@ -23,6 +25,14 @@ public class RotateCameraScript : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
+
+        if (is3dMaze)
+        {
+            if (gameData.MazeSize2D == 2)
+            {
+                target = AdditionalTarget;
+            }
+        }
 
         MaxDistance = CameraDistance();
         distance = MaxDistance;
