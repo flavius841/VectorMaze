@@ -9,13 +9,6 @@ public class TapAway3DMatrixGenerator : MonoBehaviour
     public int[,] layer2;
     public int[,] layer3;
 
-    // Direction Key:
-    // 0 = Forward (+Z)
-    // 1 = Right (+X)
-    // 2 = Back (-Z)
-    // 3 = Left (-X)
-    // 4 = Up (+Y)
-    // 5 = Down (-Y)
 
     void Start()
     {
@@ -80,14 +73,26 @@ public class TapAway3DMatrixGenerator : MonoBehaviour
                 }
 
                 float center = size / 2f;
-                allValidMoves.Sort((a, b) =>
-                {
-                    float distA = Mathf.Abs(a.x - center) + Mathf.Abs(a.y - center) + Mathf.Abs(a.z - center);
-                    float distB = Mathf.Abs(b.x - center) + Mathf.Abs(b.y - center) + Mathf.Abs(b.z - center);
-                    return distA.CompareTo(distB);
-                });
+                float minDistance = float.MaxValue;
+                List<Candidate> deepestMoves = new List<Candidate>();
 
-                Candidate pick = allValidMoves[0];
+                foreach (Candidate c in allValidMoves)
+                {
+                    float dist = Mathf.Abs(c.x - center) + Mathf.Abs(c.y - center) + Mathf.Abs(c.z - center);
+
+                    if (dist < minDistance)
+                    {
+                        minDistance = dist;
+                        deepestMoves.Clear();
+                        deepestMoves.Add(c);
+                    }
+                    else if (Mathf.Approximately(dist, minDistance))
+                    {
+                        deepestMoves.Add(c);
+                    }
+                }
+
+                Candidate pick = deepestMoves[Random.Range(0, deepestMoves.Count)];
 
                 matrix[pick.x, pick.y, pick.z] = pick.dir;
                 placedCount++;
@@ -95,7 +100,7 @@ public class TapAway3DMatrixGenerator : MonoBehaviour
 
             if (!gotStuck)
             {
-                Debug.Log("<color=green>Successfully generated 3D Matrix!</color>");
+                Debug.Log("<color=green>Successfully generated unique 3D Matrix!</color>");
                 return matrix;
             }
         }
@@ -103,24 +108,19 @@ public class TapAway3DMatrixGenerator : MonoBehaviour
 
     private bool IsPathEmpty3D(int[,,] matrix, int size, int startX, int startY, int startZ, int dir)
     {
-        int cx = startX;
-        int cy = startY;
-        int cz = startZ;
+        int cx = startX; int cy = startY; int cz = startZ;
 
         while (true)
         {
-            if (dir == 0) cz++;      // 0 = Forward (+Z)
-            else if (dir == 1) cx++; // 1 = Right (+X)
-            else if (dir == 2) cz--; // 2 = Back (-Z)
-            else if (dir == 3) cx--; // 3 = Left (-X)
-            else if (dir == 4) cy++; // 4 = Up (+Y)
-            else if (dir == 5) cy--; // 5 = Down (-Y)
+            if (dir == 0) cz++;
+            else if (dir == 1) cx++;
+            else if (dir == 2) cz--;
+            else if (dir == 3) cx--;
+            else if (dir == 4) cy++;
+            else if (dir == 5) cy--;
 
-            if (cx < 0 || cx >= size || cy < 0 || cy >= size || cz < 0 || cz >= size)
-                return true;
-
-            if (matrix[cx, cy, cz] != -1)
-                return false;
+            if (cx < 0 || cx >= size || cy < 0 || cy >= size || cz < 0 || cz >= size) return true;
+            if (matrix[cx, cy, cz] != -1) return false;
         }
     }
 
@@ -131,7 +131,6 @@ public class TapAway3DMatrixGenerator : MonoBehaviour
         for (int y = 0; y < size; y++)
         {
             fullOutput += $"<b>--- Layer Y = {y} (Bottom to Top) ---</b>\n";
-
             for (int z = size - 1; z >= 0; z--)
             {
                 for (int x = 0; x < size; x++)
@@ -147,19 +146,12 @@ public class TapAway3DMatrixGenerator : MonoBehaviour
             }
             fullOutput += "\n";
         }
-
         Debug.Log(fullOutput);
     }
 
     private struct Candidate
     {
         public int x, y, z, dir;
-        public Candidate(int x, int y, int z, int d)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.dir = d;
-        }
+        public Candidate(int x, int y, int z, int d) { this.x = x; this.y = y; this.z = z; this.dir = d; }
     }
 }
