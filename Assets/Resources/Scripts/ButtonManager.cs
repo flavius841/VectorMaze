@@ -5,14 +5,20 @@ using System;
 public class ButtonManager : MonoBehaviour
 {
     public UserInputScript userInput;
-    [SerializeField] bool StartMovingRight;
-    [SerializeField] bool StartMovingBack;
+    [SerializeField] bool StartMovingRightFor2d;
+    [SerializeField] bool StartMovingLefttFor3d;
+    [SerializeField] bool StartMovingBackFor2d;
+    [SerializeField] bool StartMovingBackFor3d;
     [SerializeField] bool Goback;
     [SerializeField] float moveSpeed;
-    [SerializeField] float MaxXRight;
-    [SerializeField] float finalXRight;
-    [SerializeField] float MaxXLeft;
-    [SerializeField] Transform SizePanel;
+    [SerializeField] float MaxXRightFor2D;
+    [SerializeField] float MaxXLeftFor3D;
+    [SerializeField] float finalXLeftFor3D;
+    [SerializeField] float finalXRightFor2D;
+    [SerializeField] float MaxXLeftFor2D;
+    [SerializeField] float MaxXRightFor3D;
+    [SerializeField] Transform SizePanel2d;
+    [SerializeField] Transform SizePanel3d;
 
     void Start()
     {
@@ -22,32 +28,9 @@ public class ButtonManager : MonoBehaviour
 
     void Update()
     {
-        // if (StartMovingRight)
-        // {
-        //     SizePanel.localPosition += Vector3.right * moveSpeed * Time.deltaTime;
-
-        //     if (SizePanel.localPosition.x > MaxX)
-        //     {
-        //         Goback = true;
-        //         StartMovingRight = false;
-        //     }
-        // }
-
-        // if (Goback)
-        // {
-        //     moveSpeed = 40f;
-
-        //     SizePanel.localPosition += Vector3.left * moveSpeed * Time.deltaTime;
-
-        //     if (SizePanel.localPosition.x < finalX)
-        //     {
-        //         Goback = false;
-        //     }
-
-        // }
-
-        Moving(ref StartMovingRight, true, MaxXRight, finalXRight, Vector3.right, () => SizePanel.localPosition.x > MaxXRight);
-        Moving(ref StartMovingBack, false, MaxXLeft, 0f /* doesn't matter */, Vector3.left, () => SizePanel.localPosition.x < MaxXLeft);
+        Moving(ref StartMovingRightFor2d, true, finalXRightFor2D, Vector3.right, () => SizePanel2d.localPosition.x > MaxXRightFor2D, SizePanel2d);
+        Moving(ref StartMovingLefttFor3d, true, finalXLeftFor3D, Vector3.left, () => SizePanel3d.localPosition.x < MaxXLeftFor3D, SizePanel3d);
+        Moving(ref StartMovingBackFor2d, false, 0f /* doesn't matter */, Vector3.left, () => SizePanel2d.localPosition.x < MaxXLeftFor2D, SizePanel2d);
     }
 
     public void LoadTutorial()
@@ -60,14 +43,24 @@ public class ButtonManager : MonoBehaviour
         Invoke("LoadTutorial", 0.5f);
     }
 
-    public void AskSize()
+    public void AskSizeFor2D()
     {
-        StartMovingRight = true;
+        StartMovingRightFor2d = true;
     }
 
-    public void Back()
+    public void AskSizeFor3D()
     {
-        StartMovingBack = true;
+        StartMovingLefttFor3d = true;
+    }
+
+    public void BackFor2d()
+    {
+        StartMovingBackFor2d = true;
+    }
+
+    public void BackFor3d()
+    {
+        StartMovingBackFor3d = true;
     }
 
     public void LoadRLevel()
@@ -89,7 +82,7 @@ public class ButtonManager : MonoBehaviour
 
     }
 
-    void Moving(ref bool StartMoving, bool Step2nd, float MaxX, float finalX, Vector3 Direction, Func<bool> touchedMax)
+    void Moving(ref bool StartMoving, bool Step2nd, float MaxX, float finalX, Vector3 Direction, Func<bool> touchedMax, Transform SizePanel)
     {
         if (StartMoving)
         {
