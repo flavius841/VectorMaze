@@ -4,4 +4,10 @@ using UnityEngine;
 public class GameDataScript : ScriptableObject
 {
     public int MazeSize2D;
+    public bool LoadingDone;
+
+    private void OnEnable()
+    {
+        LoadingDone = false;
+    }
 }

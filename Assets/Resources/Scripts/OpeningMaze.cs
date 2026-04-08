@@ -6,6 +6,7 @@ public class OpeningMaze : MonoBehaviour
     [SerializeField] int i = 0;
     [SerializeField] int j = 0;
     public bool Done = false;
+    public GameDataScript gamedataScript;
     void Start()
     {
 
@@ -13,6 +14,13 @@ public class OpeningMaze : MonoBehaviour
 
     void Update()
     {
+        Done = gamedataScript.LoadingDone;
+
+        if (Done)
+        {
+            gameObject.SetActive(false);
+        }
+
         if (i < transform.childCount)
         {
 
@@ -27,7 +35,7 @@ public class OpeningMaze : MonoBehaviour
 
                 if (i == transform.childCount)
                 {
-                    Done = true;
+                    gamedataScript.LoadingDone = true;
                 }
             }
 
