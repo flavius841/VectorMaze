@@ -5,18 +5,28 @@ public class ScoreScript : MonoBehaviour
 {
     public int Score;
     public bool StartFinalTutorial;
-    public TapAwayMatrixGenerator tapAwayMatrixGenerator;
+    public GameDataScript gamedataScript;
     public CollisionScript collisionScript;
     [SerializeField] bool Cheked;
     [SerializeField] GameObject LoseWinText;
     [SerializeField] GameObject TutorialPanel;
     [SerializeField] bool NormalLevel;
+    [SerializeField] bool level3D;
 
     void Update()
     {
         if (NormalLevel)
         {
-            if (Score == tapAwayMatrixGenerator.width * tapAwayMatrixGenerator.height && !Cheked)
+            if (Score == gamedataScript.MazeSize2D * gamedataScript.MazeSize2D && !Cheked)
+            {
+                Invoke("WinFunction", 1f);
+                Cheked = true;
+            }
+        }
+
+        else if (level3D)
+        {
+            if (Score == gamedataScript.MazeSize2D * gamedataScript.MazeSize2D * gamedataScript.MazeSize2D && !Cheked)
             {
                 Invoke("WinFunction", 1f);
                 Cheked = true;

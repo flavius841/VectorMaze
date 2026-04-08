@@ -113,6 +113,9 @@ public class RotateCameraScript : MonoBehaviour
     float CameraDistance()
     {
         if (Menu || Tutorial) return 15f;
+        else if (gameData.MazeSize2D == 2 && is3dMaze) return 25f;
+        else if (gameData.MazeSize2D == 3 && is3dMaze) return 35f;
+        else if (gameData.MazeSize2D == 4 && is3dMaze) return 40f;
         else if (gameData.MazeSize2D == 6) return 25f;
         else if (gameData.MazeSize2D == 5) return 20f;
         else if (gameData.MazeSize2D == 4) return 17f;

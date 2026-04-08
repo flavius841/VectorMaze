@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class TapAway3DMatrixGenerator : MonoBehaviour
 {
-    public int size = 4;
+    public GameDataScript gameData;
+    public int size;
     public int[,] layer0;
     public int[,] layer1;
     public int[,] layer2;
@@ -12,6 +13,8 @@ public class TapAway3DMatrixGenerator : MonoBehaviour
 
     void Awake()
     {
+        size = gameData.MazeSize2D;
+
         layer0 = new int[size, size];
         layer1 = new int[size, size];
         layer2 = new int[size, size];
