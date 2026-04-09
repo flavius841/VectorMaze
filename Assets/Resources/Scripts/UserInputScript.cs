@@ -7,11 +7,12 @@ public class UserInputScript : MonoBehaviour
     [SerializeField] TMP_InputField sizeInput;
     public GameDataScript gameData;
     public bool TookInput;
+    [SerializeField] int MaxValue;
     public void ReadStringInput()
     {
         string input = sizeInput.text;
 
-        if (int.TryParse(input, out int value) && input.Trim().Length == 1 && value <= 6 && value >= 2)
+        if (int.TryParse(input, out int value) && input.Trim().Length == 1 && value <= MaxValue && value >= 2)
         {
             gameData.MazeSize2D = value;
             TookInput = true;

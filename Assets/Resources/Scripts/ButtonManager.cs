@@ -31,14 +31,18 @@ public class ButtonManager : MonoBehaviour
 
     void Update()
     {
+
         Moving(ref StartMovingRightFor2d, true, finalXRightFor2D, Vector3.right,
-         () => SizePanel2d.localPosition.x > MaxXRightFor2D, SizePanel2d, ref Goback2D);
+        () => SizePanel2d.localPosition.x > MaxXRightFor2D, SizePanel2d, ref Goback2D);
+
         Moving(ref StartMovingLefttFor3d, true, finalXLeftFor3D, Vector3.left,
-         () => SizePanel3d.localPosition.x < MaxXLeftFor3D, SizePanel3d, ref Goback3D);
-        Moving(ref StartMovingBackFor2d, false, 0f /* doesn't matter */, Vector3.left,
-         () => SizePanel2d.localPosition.x < MaxXLeftFor2D, SizePanel2d, ref Goback2D);
-        Moving(ref StartMovingBackFor3d, false, 0f /* doesn't matter */, Vector3.right,
-         () => SizePanel3d.localPosition.x > MaxXRightFor3D, SizePanel3d, ref Goback3D);
+        () => SizePanel3d.localPosition.x < MaxXLeftFor3D, SizePanel3d, ref Goback3D);
+
+        Moving(ref StartMovingBackFor2d, false, 0f, Vector3.left,
+        () => SizePanel2d.localPosition.x < MaxXLeftFor2D, SizePanel2d, ref Goback2D);
+
+        Moving(ref StartMovingBackFor3d, false, 0f, Vector3.right,
+        () => SizePanel3d.localPosition.x > MaxXRightFor3D, SizePanel3d, ref Goback3D);
     }
 
     public void LoadTutorial()
@@ -98,7 +102,8 @@ public class ButtonManager : MonoBehaviour
 
     }
 
-    void Moving(ref bool StartMoving, bool Step2nd, float finalX, Vector3 Direction, Func<bool> touchedMax, Transform SizePanel, ref bool Goback)
+    void Moving(ref bool StartMoving, bool Step2nd, float finalX, Vector3 Direction,
+     Func<bool> touchedMax, Transform SizePanel, ref bool Goback)
     {
         if (StartMoving)
         {
@@ -106,12 +111,7 @@ public class ButtonManager : MonoBehaviour
 
             if (touchedMax())
             {
-                if (Step2nd)
-                {
-                    Goback = true;
-                    Step2nd = false;
-                }
-
+                if (Step2nd) Goback = true;
                 StartMoving = false;
             }
         }
@@ -120,13 +120,13 @@ public class ButtonManager : MonoBehaviour
         {
             moveSpeed = 40f;
 
-            SizePanel.localPosition += Vector3.left * moveSpeed * Time.deltaTime;
+            Vector3 target = new Vector3(finalX, SizePanel.localPosition.y, SizePanel.localPosition.z);
+            SizePanel.localPosition = Vector3.MoveTowards(SizePanel.localPosition, target, moveSpeed * Time.deltaTime);
 
-            if (SizePanel.localPosition.x < finalX)
+            if (Mathf.Approximately(SizePanel.localPosition.x, finalX))
             {
                 Goback = false;
             }
-
         }
     }
 
