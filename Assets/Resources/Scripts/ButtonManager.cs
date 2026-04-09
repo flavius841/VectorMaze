@@ -90,17 +90,36 @@ public class ButtonManager : MonoBehaviour
 
     public void RLevelButton()
     {
-        if (userInput.TookInput)
+        if (userInput.TookInputFor2D)
         {
             Invoke("LoadRLevel", 0.5f);
         }
 
         else
         {
-            StartCoroutine(userInput.FlashPlaceholderError());
+            StartCoroutine(userInput.FlashPlaceholderError(SizePanel2d.GetComponent<TMPro.TMP_InputField>()));
+        }
+    }
+
+    public void RLevelButton3D()
+    {
+        if (userInput.TookInputFor3D)
+        {
+            Invoke("LoadRLevel3D", 0.5f);
         }
 
+        else
+        {
+            StartCoroutine(userInput.FlashPlaceholderError(SizePanel3d.GetComponent<TMPro.TMP_InputField>()));
+        }
     }
+
+    public void LoadRLevel3D()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+
 
     void Moving(ref bool StartMoving, bool Step2nd, float finalX, Vector3 Direction,
      Func<bool> touchedMax, Transform SizePanel, ref bool Goback)
