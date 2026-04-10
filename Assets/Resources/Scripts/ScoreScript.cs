@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
+
 
 public class ScoreScript : MonoBehaviour
 {
@@ -8,12 +10,15 @@ public class ScoreScript : MonoBehaviour
     public GameDataScript gamedataScript;
     public CollisionScript collisionScript;
     public TapAwayMatrixGenerator MatrixGenerator;
+    public RotateCameraScript rotateCameraScript;
     [SerializeField] bool Cheked;
     [SerializeField] GameObject LoseWinText;
     [SerializeField] GameObject TutorialPanel;
     [SerializeField] bool NormalLevel;
     [SerializeField] bool level3D;
     [SerializeField] bool SpeedRunLevel;
+    public Vector3 center;
+    [SerializeField] GameObject target;
 
     void Update()
     {
@@ -78,6 +83,14 @@ public class ScoreScript : MonoBehaviour
 
         int[,] resultMatrix = MatrixGenerator.GenerateMatrix(width, height);
         MatrixGenerator.SpawnVisuals(resultMatrix);
+        StartCoroutine(CalculateCenterNextFrame());
+    }
+
+    IEnumerator CalculateCenterNextFrame()
+    {
+        yield return null;
+
+        center = rotateCameraScript.GetCombinedCenter(target);
     }
 
 }

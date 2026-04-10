@@ -8,7 +8,6 @@ public class TapAwayMatrixGenerator : MonoBehaviour
     public int height;
     public GameObject arrowPrefab;
     public float spacing = 2.0f;
-    public int[,] resultMatrix;
 
     void Awake()
     {
@@ -17,7 +16,7 @@ public class TapAwayMatrixGenerator : MonoBehaviour
     }
     void Start()
     {
-        resultMatrix = GenerateMatrix(width, height);
+        int[,] resultMatrix = GenerateMatrix(width, height);
 
         PrintMatrixToConsole(resultMatrix, width, height);
 
@@ -32,6 +31,11 @@ public class TapAwayMatrixGenerator : MonoBehaviour
 
     public void SpawnVisuals(int[,] matrix)
     {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         for (int x = 0; x < width; x++)
         {
             for (int y = height - 1; y >= 0; y--)

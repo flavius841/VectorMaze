@@ -4,6 +4,7 @@ public class RotateCameraScript : MonoBehaviour
 {
     public OpeningMaze openingMaze;
     public GameDataScript gameData;
+    public ScoreScript scoreScript;
     [SerializeField] Transform target;
     [SerializeField] Transform AdditionalTarget;
     [SerializeField] bool GotTheCenter;
@@ -14,6 +15,7 @@ public class RotateCameraScript : MonoBehaviour
     [SerializeField] bool Menu;
     [SerializeField] bool Tutorial;
     [SerializeField] bool is3dMaze;
+    [SerializeField] bool SpeedRunLevel;
     [SerializeField] Vector3 center;
     [SerializeField] float MaxDistance;
 
@@ -35,12 +37,23 @@ public class RotateCameraScript : MonoBehaviour
         }
 
         MaxDistance = CameraDistance();
+
+        if (SpeedRunLevel)
+        {
+            MaxDistance = 25f;
+        }
+
         distance = MaxDistance;
     }
 
 
     void LateUpdate()
     {
+        if (SpeedRunLevel)
+        {
+            center = scoreScript.center;
+        }
+
         if (Menu)
         {
             if (openingMaze.Done)
