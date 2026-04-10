@@ -11,7 +11,7 @@ public class ScoreScript : MonoBehaviour
     public CollisionScript collisionScript;
     public TapAwayMatrixGenerator MatrixGenerator;
     public RotateCameraScript rotateCameraScript;
-    [SerializeField] bool Cheked;
+    public bool Cheked;
     [SerializeField] GameObject LoseWinText;
     [SerializeField] GameObject TutorialPanel;
     [SerializeField] bool NormalLevel;
@@ -47,6 +47,7 @@ public class ScoreScript : MonoBehaviour
                 gamedataScript.MazeSize2D = Random.Range(2, 7);
                 Invoke("NewStage", 0.5f);
                 Score = 0;
+                Cheked = true;
             }
         }
 
