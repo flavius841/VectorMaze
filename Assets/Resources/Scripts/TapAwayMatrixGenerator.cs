@@ -8,6 +8,7 @@ public class TapAwayMatrixGenerator : MonoBehaviour
     public int height;
     public GameObject arrowPrefab;
     public float spacing = 2.0f;
+    public int[,] resultMatrix;
 
     void Awake()
     {
@@ -16,14 +17,20 @@ public class TapAwayMatrixGenerator : MonoBehaviour
     }
     void Start()
     {
-        int[,] resultMatrix = GenerateMatrix(width, height);
+        resultMatrix = GenerateMatrix(width, height);
 
         PrintMatrixToConsole(resultMatrix, width, height);
 
         SpawnVisuals(resultMatrix);
     }
 
-    void SpawnVisuals(int[,] matrix)
+    void Update()
+    {
+        width = gameData.MazeSize2D;
+        height = gameData.MazeSize2D;
+    }
+
+    public void SpawnVisuals(int[,] matrix)
     {
         for (int x = 0; x < width; x++)
         {

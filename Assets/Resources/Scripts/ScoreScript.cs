@@ -7,11 +7,13 @@ public class ScoreScript : MonoBehaviour
     public bool StartFinalTutorial;
     public GameDataScript gamedataScript;
     public CollisionScript collisionScript;
+    public TapAwayMatrixGenerator MatrixGenerator;
     [SerializeField] bool Cheked;
     [SerializeField] GameObject LoseWinText;
     [SerializeField] GameObject TutorialPanel;
     [SerializeField] bool NormalLevel;
     [SerializeField] bool level3D;
+    [SerializeField] bool SpeedRunLevel;
 
     void Update()
     {
@@ -30,6 +32,16 @@ public class ScoreScript : MonoBehaviour
             {
                 Invoke("WinFunction", 1f);
                 Cheked = true;
+            }
+        }
+
+        else if (SpeedRunLevel)
+        {
+            if (Score == gamedataScript.MazeSize2D * gamedataScript.MazeSize2D)
+            {
+                gamedataScript.MazeSize2D = Random.Range(2, 7);
+                Invoke("NewStage", 0.5f);
+                Score = 0;
             }
         }
 
@@ -57,6 +69,15 @@ public class ScoreScript : MonoBehaviour
             collisionScript.Collided = true;
         }
 
+    }
+
+    void NewStage()
+    {
+        int width = gamedataScript.MazeSize2D;
+        int height = gamedataScript.MazeSize2D;
+
+        int[,] resultMatrix = MatrixGenerator.GenerateMatrix(width, height);
+        MatrixGenerator.SpawnVisuals(resultMatrix);
     }
 
 }
