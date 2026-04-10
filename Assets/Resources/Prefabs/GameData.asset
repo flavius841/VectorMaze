@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2a89549cced460d9ada97f2c77394f, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  MazeSize2D: 3
-  LoadingDone: 1
+  MazeSize2D: 2
+  LoadingDone: 0

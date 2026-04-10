@@ -20,6 +20,11 @@ public class ScoreScript : MonoBehaviour
     public Vector3 center;
     [SerializeField] GameObject target;
 
+    void Start()
+    {
+        StartCoroutine(CalculateCenterNextFrame());
+    }
+
     void Update()
     {
         if (NormalLevel)

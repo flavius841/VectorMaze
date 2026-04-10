@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BarFill : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class BarFill : MonoBehaviour
     [SerializeField] Image fillImage;
     public float progress;
     [SerializeField] float Speed;
+    [SerializeField] int Score;
+    [SerializeField] TextMeshProUGUI LoseWinText;
+    public CollisionScript collisionScript;
     void Start()
     {
 
@@ -21,8 +25,15 @@ public class BarFill : MonoBehaviour
             progress = progress + 0.25f;
             progress = Mathf.Clamp01(progress);
             scoreScript.Cheked = false;
+            Score++;
         }
 
         fillImage.fillAmount = progress;
+
+        if (progress == 0)
+        {
+            LoseWinText.text = "    Score: " + Score.ToString();
+            collisionScript.Collided = true;
+        }
     }
 }
