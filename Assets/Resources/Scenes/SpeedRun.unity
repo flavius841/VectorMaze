@@ -348,7 +348,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &606478750
+--- !u!224 &757629092 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7839534289334471729, guid: dcc4a1cd6c289d867aa5e8ce884226b6, type: 3}
+  m_PrefabInstance: {fileID: 1768891219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!43 &829932598
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -513,11 +518,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!224 &757629092 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7839534289334471729, guid: dcc4a1cd6c289d867aa5e8ce884226b6, type: 3}
-  m_PrefabInstance: {fileID: 1768891219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &847924914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,7 +1112,7 @@ MonoBehaviour:
   scoreScript: {fileID: 1180730561}
   fillImage: {fileID: 158615391}
   progress: 1
-  Speed: 0.02
+  Speed: 0.04
   Score: 0
   LoseWinText: {fileID: 1768891222}
   collisionScript: {fileID: 1180730560}

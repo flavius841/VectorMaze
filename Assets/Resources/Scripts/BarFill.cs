@@ -18,7 +18,10 @@ public class BarFill : MonoBehaviour
 
     void Update()
     {
-        progress = Mathf.MoveTowards(progress, 0, Time.deltaTime * Speed);
+        if (!collisionScript.Collided)
+        {
+            progress = Mathf.MoveTowards(progress, 0, Time.deltaTime * Speed);
+        }
 
         if (scoreScript.Cheked)
         {
@@ -34,6 +37,12 @@ public class BarFill : MonoBehaviour
         {
             LoseWinText.text = "    Score: " + Score.ToString();
             collisionScript.Collided = true;
+        }
+
+        if (collisionScript.Collided && progress != 0)
+        {
+            LoseWinText.fontSize = 18f;
+            LoseWinText.text = "        You Lose\n         Score: " + Score.ToString();
         }
     }
 }

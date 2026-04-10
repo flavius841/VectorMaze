@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/Rlevel3d.unity
     guid: 369588f731a59db1095701a0c3e438ac
+  - enabled: 1
+    path: Assets/Resources/Scenes/SpeedRun.unity
+    guid: 96ecc90dc2ad8c44cbcf1e7544fde04d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

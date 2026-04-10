@@ -114,9 +114,24 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     public void LoadRLevel3D()
     {
         SceneManager.LoadScene(3);
+    }
+
+    public void LoadSpeedRunLevel()
+    {
+        SceneManager.LoadScene(4);
+    }
+
+    public void SpeedRunButton()
+    {
+        Invoke("LoadSpeedRunLevel", 0.5f);
     }
 
 
