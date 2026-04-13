@@ -47,7 +47,7 @@ public class ButtonManager : MonoBehaviour
 
     public void LoadTutorial()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void TutorialBool()
@@ -114,10 +114,6 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
 
     public void LoadRLevel3D()
     {

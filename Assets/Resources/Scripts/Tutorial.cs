@@ -9,6 +9,7 @@ public class Tutorial : MonoBehaviour
 {
     public bool TutorialDone = false;
     public ScoreScript scoreScript;
+    public GameDataScript GameData;
     [SerializeField] TextMeshProUGUI textDisplay;
     [SerializeField] TextMeshProUGUI NextButtonText;
     [SerializeField] GameObject TutorialPanel;
@@ -150,7 +151,8 @@ public class Tutorial : MonoBehaviour
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene(1);
+        GameData.LoadingDone = true;
+        SceneManager.LoadScene(0);
     }
     public void RestartButton()
     {
