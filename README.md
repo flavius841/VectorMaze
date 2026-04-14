@@ -20,7 +20,7 @@ The core of the infinite replayability lies in the matrix generation scripts. Bo
 
 1. **2D Matrix Generator**
 
-* **File Location:** Logic/MatrixGenerator2D.cs
+* **File Location:** [Logic/MatrixGenerator2D.cs](Logic/MatrixGenerator2D.cs)
 
 * **How it works:**
 
@@ -34,11 +34,32 @@ The core of the infinite replayability lies in the matrix generation scripts. Bo
 
 2. **3D Matrix Generator**
 
-* **File Location:** Logic/MatrixGenerator3D.cs
+* **File Location:** [Logic/MatrixGenerator2D.cs](Logic/MatrixGenerator3D.cs)
 
 * **How it works:** 
 
   * **Volumetric Expansion:** Upgrades the logic to a 3-dimensional space (X, Y, Z), expanding the pathfinding to six directional axes (adding Up and Down).
+
+  * **Memory-Safe Architecture:** Utilizes an optimized loop structure. This allows the system to safely and rapidly restart without causing memory crashes if the complex 3D generation gets stuck.
+
+  * **Center-Out Generation:** Calculates the physical center of the cube and forces the algorithm to build from the inside out. This ensures the outer layers never trap the inner layers during generation.
+
+  * **Randomized Selection Logic:** When multiple spaces are the exact same distance from the center, the script applies a random tie-breaker. This single random choice triggers a chain reaction, generating billions of unique, playable variations.
+
+
+---
+
+**Spawning the visuals**
+
+After the matrix is generated the game will spawn the vectors.
+
+This is how it looks a 2D and a 3D vector maze:
+
+![image alt](https://github.com/flavius841/VectorMaze/blob/268e1852d86374c91fe88167fd1ac6445c0177f1/Maze2D.png)
+
+![image alt](https://github.com/flavius841/VectorMaze/blob/268e1852d86374c91fe88167fd1ac6445c0177f1/Maze3D.png)
+
+---
 
 **Play the game here:**  
 https://flavius123.itch.io/vector-maze
