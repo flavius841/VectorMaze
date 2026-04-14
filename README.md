@@ -44,8 +44,7 @@ The core of the infinite replayability lies in the matrix generation scripts. Bo
 
   * **Center-Out Generation:** Calculates the physical center of the cube and forces the algorithm to build from the inside out. This ensures the outer layers never trap the inner layers during generation.
 
-  * **Randomized Selection Logic:** When multiple spaces are the exact same distance from the center, the script applies a random tie-breaker. This single random choice triggers a chain reaction, generating billions of unique, playable variations.
-
+  * **Randomized Selection Logic:** When multiple spaces are the exact same distance from the center, the script applies a randomized selection. This triggers a unique chain reaction of placements, resulting in a vast array of unique variations.
 
 ---
 
