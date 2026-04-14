@@ -4,6 +4,16 @@
 
 **Vector Maze** is a puzzle video game built using the **Unity Engine**
 
+---
+
+**Features**
+
+*Procedural Mesh Generation: Utilizes custom mesh manipulation to procedurally generate dynamic environments during runtime.
+
+*Infinite Replayability: Includes a sophisticated level generation system that automatically builds unique, randomized vector mazes for every playthrough.
+
+---
+
 **Run or continue development locally:**
 
 1. Download or clone this repository.
