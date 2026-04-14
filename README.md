@@ -8,15 +8,15 @@
 
 **Features**
 
-* **Procedural Mesh Generation:** Utilizes custom mesh manipulation to procedurally generate dynamic environments during runtime.
+* **Procedural Mesh Generation:** It uses code for creating certain geometric bodys.
 
-* **Infinite Replayability:** Includes a sophisticated level generation system that automatically builds unique, randomized vector mazes for every playthrough.
+* **Infinite Replayability:** Includes a level generation system that builds randomized vector mazes for every playthrough.
 
 ---
 
 **Level Generation Logic**
 
-The core of the infinite replayability lies in the matrix generation scripts. Both scripts utilize a "Reverse-Fill" algorithm. Instead of trying to build a puzzle forward and checking if it can be solved, the algorithm starts with an empty grid and places arrows one by one, ensuring every new piece has a clear exit. Because the puzzle is built backward, it is mathematically guaranteed to be 100% solvable when played forward.
+First, the level generates a matrix that will be the base for spawning the visuals. It uses a "Reverse-Fill" algorithm, because instead of building the maze randomly and then at the end checking if it is solvable, my code will check after every vector that is spawned if it has a clear path.
 
 1. **2D Matrix Generator**
 
@@ -24,27 +24,28 @@ The core of the infinite replayability lies in the matrix generation scripts. Bo
 
 * **How it works:**
 
-  * **Dynamic Grid Setup:** Initializes a flat, customizable grid layout based on a specified width and height.
+  * Initializes an empty grid layout based on a specified width and height.
 
-  * **Escape Path Routing:** Scans the board for empty spaces and tests four directions (Up, Down, Left, Right) to guarantee every piece has a clear exit.
+  * Scans the board for empty spaces and tests in four directions (Up, Down, Left, Right) to see if every piece has a clear exit.
 
-  * **Randomized Placement:** Chooses randomly from all valid, safe moves to ensure the puzzle layout is different every time.
+  * Chooses randomly from all valid moves to make sure the puzzle is different every time.
 
-  * **Deadlock Protection:** Automatically detects if the algorithm accidentally blocks all remaining empty spaces. If this happens, it instantly clears the board and restarts, ensuring the final puzzle is always solvable.
+  * Detects if the algorithm blocks the remaining empty spaces. If this happens, it clears the board and restarts.
 
 2. **3D Matrix Generator**
 
-* **File Location:** [Logic/MatrixGenerator2D.cs](Logic/MatrixGenerator3D.cs)
+* **File Location:** [Logic/MatrixGenerator3D.cs](Logic/MatrixGenerator3D.cs)
 
 * **How it works:** 
 
-  * **Volumetric Expansion:** Upgrades the logic to a 3-dimensional space (X, Y, Z), expanding the pathfinding to six directional axes (adding Up and Down).
+  * Now the logic will use two more directions: forward and back.
 
-  * **Memory-Safe Architecture:** Utilizes an optimized loop structure. This allows the system to safely and rapidly restart without causing memory crashes if the complex 3D generation gets stuck.
+  * Instead of using recursive logic like the previous code, this one has just a simple loop. It is safer in order not to crash
 
-  * **Center-Out Generation:** Calculates the physical center of the cube and forces the algorithm to build from the inside out. This ensures the outer layers never trap the inner layers during generation.
+  * Calculates the center of the cube and builds from the inside out. This way we make sure that the upper layer will not block the previous layer
 
-  * **Randomized Selection Logic:** When multiple spaces are the exact same distance from the center, the script applies a randomized selection. This triggers a unique chain reaction of placements, resulting in a vast array of unique variations.
+  * When multiple spaces are at the exact same distance from the center, the script applies a randomized selection because otherwise it will in result the same matrix again and again
+
 
 ---
 
